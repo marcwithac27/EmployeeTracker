@@ -1,0 +1,25 @@
+{
+  "name": "EmployeeTracker",
+  "version": "1.0.0",
+  "description": "* Add departments, roles, employees",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcwithac27/EmployeeTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marcwithac27/EmployeeTracker/issues"
+  },
+  "homepage": "https://github.com/marcwithac27/EmployeeTracker#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "inquirer": "^7.1.0",
+    "mysql": "^2.18.1"
+  }
+}
