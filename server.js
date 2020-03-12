@@ -3,7 +3,6 @@ const mysql = require("mysql");
 const confirm = require('inquirer-confirm');
 const imageToAscii = require("image-to-ascii");
 
-
 const connection = mysql.createConnection({
     host: "localhost",
   
@@ -17,14 +16,29 @@ const connection = mysql.createConnection({
     password: "100Grovewood!",
     database: "emplyoeeTracker_db"
 });
+
+
 imageToAscii("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4GLMbD0CsLXXHNK5Ax1XtIBUcPQZsxUTVzReB73NRkpCJw-3d7Q&s", (err, converted) => {
     console.log(err || converted);
+    
 
 connection.connect(function(err) {
     if (err) throw err;
     
 });
     console.log("connected on port " + connection.port);
+    connection.query("SELECT * from role",  (err, res) => {
+        if (err) throw err;
+        const showroles = res.map(role => ({ name: role.title, value: role.id }))
+      })
+      connection.query("SELECT * from department", (err, res) => {
+          if (err) throw err;
+       const showdepartments = res.map(dep => ({ name: dep.name, value: dep.id }))
+      })
+      connection.query("SELECT * from employee", (err, res) => {
+          if (err) throw err;
+        const showemployees = res.map(emp => ({ name: `${emp.first_name} ${emp.last_name}`, value: emp.id }))
+      })
     startQuestions();
 })
 
@@ -94,7 +108,7 @@ function menu(option){
             roleAdd();
             break;
         case "roleUpate":
-            roleUpate();
+            roleUpdate();
             break;
         case "end":
             endapp()
@@ -130,6 +144,37 @@ function employeeView(){
     next()
     })
 };
+function employeeAdd() {
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          message: "What is the first name?",
+          name: "firstName",
+        },
+        {
+          type: "input",
+          message: "What is the last name?",
+          name: "lastName",
+        },
+        {
+          type: "list",
+          message: "What is the employee's title?",
+          name: "title",
+          choices: showroles
+        },
+        {
+          type: "list",
+          message: "Who is the employee's manager?",
+          name: "manager",
+          choices: showemployees,
+        }
+      ]).then(function (response) {
+        
+        addEmployees(response)
+      })
+  }
+
 
 function next() {
     confirm("Continue?")
