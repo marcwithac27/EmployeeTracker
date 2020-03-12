@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
-const cliTable = require("cli-table");
 
 
 const connection = mysql.createConnection({
@@ -65,10 +64,15 @@ function startQuestions(){
             value: "end"
           }
         ]
-      }).then(function (answer) {
-        switch(answer.value) {
+      }).then(function (res) {
+        menu(res.choices)
+      
+    });
+}
+function menu(option){
+    switch(option) {
         case "employeeView":
-            employeesView();
+            employeeView();
             break;
         case "departmentView":
             departmentsView();
@@ -90,6 +94,13 @@ function startQuestions(){
         case "end":
             endapp()
         }
-      
-    })
+}
+
+function rolesView(){
+   const query = "SELECT * FROM role";
+   connection.query(query,(err,res) => {
+    const roles = res.map(role =>({ name: role.title, id: role.id, salary: role.salary}))
+    console.table(res)
+
+} )
 }
