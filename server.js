@@ -3,6 +3,7 @@ const mysql = require("mysql");
 const confirm = require('inquirer-confirm');
 const imageToAscii = require("image-to-ascii");
 
+
 const connection = mysql.createConnection({
     host: "localhost",
   
@@ -18,7 +19,7 @@ const connection = mysql.createConnection({
 });
 
 
-imageToAscii("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4GLMbD0CsLXXHNK5Ax1XtIBUcPQZsxUTVzReB73NRkpCJw-3d7Q&s", (err, converted) => {
+imageToAscii("./assets/WithAC4.jpg", (err, converted) => {
     console.log(err || converted);
     
 
@@ -29,15 +30,15 @@ connection.connect(function(err) {
     console.log("connected on port " + connection.port);
     connection.query("SELECT * from role",  (err, res) => {
         if (err) throw err;
-        const showroles = res.map(role => ({ name: role.title, value: role.id }))
+        showroles = res.map(role => ({ name: role.title, value: role.id }))
       })
       connection.query("SELECT * from department", (err, res) => {
           if (err) throw err;
-       const showdepartments = res.map(dep => ({ name: dep.name, value: dep.id }))
+       showdepartments = res.map(dep => ({ name: dep.name, value: dep.id }))
       })
       connection.query("SELECT * from employee", (err, res) => {
           if (err) throw err;
-        const showemployees = res.map(emp => ({ name: `${emp.first_name} ${emp.last_name}`, value: emp.id }))
+        showemployees = res.map(emp => ({ name: `${emp.first_name} ${emp.last_name}`, value: emp.id }))
       })
     startQuestions();
 })
@@ -136,8 +137,8 @@ function departmentsView(){
 }
 
 function employeeView(){
-    let query = "SELECT employee.first_name, employee.last_name, employee.id, employee.role_id, employee.manager_id, role.title, role.id, role.salary, role.department_id, department.name, department.id";
-    query += "FROM employee LEFT JOIN role ON (employee.role_id = role.id)"
+    let query = "SELECT * FROM employee";
+  
     connection.query(query, (err,res) => {
         if (err) throw err
     console.table(res) 
@@ -170,6 +171,7 @@ function employeeAdd() {
           choices: showemployees,
         }
       ]).then( (err,res) => {
+          if (err) throw err;
         
         addEmployees(res)
       })
