@@ -100,6 +100,7 @@ function menu(option){
 function rolesView(){
    let query = "SELECT * FROM role";
    connection.query(query,(err,res) => {
+    if (err) throw err
     console.table(res)
     next()
 
@@ -109,6 +110,7 @@ function rolesView(){
 function departmentsView(){
     let query = "SELECT * FROM department"
     connection.query(query,(err,res) => {
+        if (err) throw err
         console.table(res)
         next()
     
@@ -116,8 +118,10 @@ function departmentsView(){
 }
 
 function employeeView(){
-    let query = "SELECT * FROM employee";
+    let query = "SELECT employee.first_name, employee.last_name, employee.id, employee.role_id, employee.manager_id, role.title, role.id, role.salary, role.department_id, department.name, department.id";
+    query += "FROM employee LEFT JOIN role ON (employee.role_id = role.id)"
     connection.query(query, (err,res) => {
+        if (err) throw err
     console.table(res) 
     next()
     })
