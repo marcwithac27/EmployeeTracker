@@ -101,7 +101,8 @@ function menu(option){
             rolesView();
             break;
         case "employeeAdd":
-            employeeAdd()
+            employeeAdd();
+            break;
         case "deparmentAdd":
             deparmentAdd();
             break;
@@ -137,7 +138,7 @@ function departmentsView(){
 }
 
 function employeeView(){
-    let query = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, employee.manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department_id";
+    let query = "SELECT employee.id, employee.first_name, employee.last_name, role.title, role.salary, employee.manager_id, department.name FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department_id";
    
     connection.query(query, (err,res) => {
         if (err) throw err
@@ -176,7 +177,19 @@ function employeeAdd() {
         addEmployees(res)
       })
   }
+  function addEmployees(data) {
 
+    connection.query("INSERT INTO employee SET ?",
+      {
+        first_name: data.firstName,
+        last_name: data.lastName,
+        role_id: data.title,
+        manager_id: data.manager
+      }, function (error, res) {
+        if (error) throw error;
+      })
+      next();
+  }
 
 function next() {
     confirm("Continue?")
