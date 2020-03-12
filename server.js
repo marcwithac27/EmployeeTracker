@@ -20,11 +20,7 @@ const connection = mysql.createConnection({
 
 connection.connect(function(err) {
     if (err) throw err;
-
-console.log("connected on port " + connection.port);
-    connection.query("SELECT * FROM employee",  (err, res) => {
-        const employees = res.map(emp => ({ name: `${emp.first_name} ${emp.last_name}`, value: emp.id }))
-    })
+    console.log("connected on port " + connection.port);
     startQuestions();
 })
 
@@ -69,8 +65,31 @@ function startQuestions(){
             value: "end"
           }
         ]
-      }).then(function (res) {
-        
-      menu(res.choices)
+      }).then(function (answer) {
+        switch(answer.value) {
+        case "employeeView":
+            employeesView();
+            break;
+        case "departmentView":
+            departmentsView();
+            break;
+        case "rolesView":
+            rolesView();
+            break;
+        case "employeeAdd":
+            employeeAdd()
+        case "deparmentAdd":
+            deparmentAdd();
+            break;
+        case "roleAdd":
+            roleAdd();
+            break;
+        case "roleUpate":
+            roleUpate();
+            break;
+        case "end":
+            endapp()
+        }
+      
     })
 }
