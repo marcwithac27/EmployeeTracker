@@ -34,7 +34,7 @@ function startQuestions(){
         choices: [
           {
             name: "View employees",
-            value: "employeesView"
+            value: "employeeView"
           },
           {
             name: "View departments",
@@ -75,7 +75,7 @@ function menu(option){
         case "employeeView":
             employeeView();
             break;
-        case "departmentView":
+        case "departmentsView":
             departmentsView();
             break;
         case "rolesView":
@@ -106,12 +106,22 @@ function rolesView(){
 } )
 };
 
-function employeeView(){
-    let query = "SELECT * FROM departments";
-    connection.query(query, (err,res) => {
-        console.table(res) 
-    })
+function departmentsView(){
+    let query = "SELECT * FROM department"
+    connection.query(query,(err,res) => {
+        console.table(res)
+        next()
+    
+    } )
 }
+
+function employeeView(){
+    let query = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id;";
+    connection.query(query, (err,res) => {
+    console.table(res) 
+    next()
+    })
+};
 
 function next() {
     confirm("Continue?")
