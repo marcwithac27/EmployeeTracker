@@ -192,6 +192,68 @@ function employeeAdd() {
       next();
   }
 
+  function deparmentAdd() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What is the name of the new department?",
+          name: "name"
+        }
+      ])
+      .then(function (res) {
+        
+        addDepartment(res);
+      })
+  }
+  
+  function addDepartment(data) {
+    connection.query("INSERT INTO department SET ?", { name: data.name },
+    function (error, res) {
+      
+      if (error) throw error;
+    });
+    next();
+  }
+
+  function roleAdd() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What is the name of the new employee role?",
+          name: "title"
+        },
+        {
+          type: "input",
+          message: "How much is the salary of the new role?",
+          name: "salary"
+        },
+        {
+          type: "list",
+          message: "In which department is the new role?",
+          name: "id",
+          choices: showdepartments
+        }
+      ])
+      .then(function (res) {
+        
+        addEmployeeRole(res);
+      })
+  }
+  
+  function addEmployeeRole(data) {
+    connection.query("INSERT INTO role SET ?", {
+      title: data.title,
+      salary: data.salary,
+      department_id: data.id
+    }, function (err, res) {
+      
+      if (err) throw err;
+    });
+    next();
+  }
+
 function next() {
     confirm("Continue?")
     .then(function confirmed() {
