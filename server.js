@@ -177,12 +177,13 @@ function employeeAdd() {
         addEmployees(res)
       })
   }
-  function addEmployees(data) {
+  function addEmployees(err,data) {
+      if (err) throw err
 
     connection.query("INSERT INTO employee SET ?",
       {
-        first_name: data.firstName,
-        last_name: data.lastName,
+        first_name: data.first_name,
+        last_name: data.last_name,
         role_id: data.title,
         manager_id: data.manager
       }, function (error, res) {
