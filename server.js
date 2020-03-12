@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
 });
 
 
-imageToAscii("./assets/WithAC4.jpg", (err, converted) => {
+imageToAscii("./assets/resort-equity-now-logo (1).JPG", (err, converted) => {
     console.log(err || converted);
     
 
@@ -177,20 +177,19 @@ function employeeAdd() {
         addEmployees(res)
       })
   }
-  function addEmployees(err,data) {
-      if (err) throw err
-
-    cconnection.query("INSERT INTO employee SET ?", {
-        first_name: data.first_name,
-        last_name: data.last_name,
-        manager_id: data.manager,
-        role_id: data.title,
-      }, function (err, res) {
-        
-        if (err) throw err;
-      });
-      next();
+  function addEmployees(data) {
+    connection.query("INSERT INTO employee SET ?", {
+      first_name: data.first_name,
+      last_name: data.last_name,
+      role_id: data.title,
+      manager_id: data.manager
+    }, function (err, res) {
+      
+      if (err) throw err;
+    });
+    next();
   }
+
 
   function deparmentAdd() {
     inquirer
@@ -248,6 +247,38 @@ function employeeAdd() {
       salary: data.salary,
       department_id: data.id
     }, function (err, res) {
+      
+      if (err) throw err;
+    });
+    next();
+  }
+
+
+  function roleUpdate() {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message: "For which employee would you like to update the role?",
+          name: "emp_ID",
+          choices: showemployees
+        },
+        {
+          type: "list",
+          message: "What is the employee's new role?",
+          name: "title_ID",
+          choices: showroles
+        }
+      ])
+      .then(function (res) {
+       
+        updateEmployeeRole(res);
+      })
+  }
+  
+  function updateEmployeeRole(data) {
+    connection.query(`UPDATE employee SET role_id = ${data.title_ID} WHERE id = ${data.emp_ID}`,
+    function (err, res) {
       
       if (err) throw err;
     });
