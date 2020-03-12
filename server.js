@@ -137,8 +137,8 @@ function departmentsView(){
 }
 
 function employeeView(){
-    let query = "SELECT * FROM employee";
-  
+    let query = "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name, role.salary, employee.manager_id FROM employee LEFT JOIN role ON employee.role_id = role.id LEFT JOIN department ON role.department_id = department_id";
+   
     connection.query(query, (err,res) => {
         if (err) throw err
     console.table(res) 
