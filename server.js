@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
 const confirm = require('inquirer-confirm');
+const imageToAscii = require("image-to-ascii");
 
 
 const connection = mysql.createConnection({
@@ -16,10 +17,13 @@ const connection = mysql.createConnection({
     password: "100Grovewood!",
     database: "emplyoeeTracker_db"
 });
-
+imageToAscii("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4GLMbD0CsLXXHNK5Ax1XtIBUcPQZsxUTVzReB73NRkpCJw-3d7Q&s", (err, converted) => {
+    console.log(err || converted);
 
 connection.connect(function(err) {
     if (err) throw err;
+    
+});
     console.log("connected on port " + connection.port);
     startQuestions();
 })

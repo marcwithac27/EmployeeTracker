@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/marcwithac27/EmployeeTracker#readme",
   "dependencies": {
+    "brew": "0.0.8",
     "cli-table": "^0.3.1",
+    "image-to-ascii": "^3.0.12",
     "inquirer": "^7.1.0",
     "inquirer-confirm": "^2.0.7",
     "mysql": "^2.18.1"
