@@ -19,7 +19,7 @@ INSERT INTO department (name)
 VALUES ("Administration");
 CREATE TABLE role (
   id INT AUTO_INCREMENT NOT NULL,
-  title VARCHAR(30) NOT NULL,
+  title VARCHAR(50) NOT NULL,
   salary DECIMAL(10,2) NOT NULL,
   department_id INT NOT NULL,
   PRIMARY KEY(id)
@@ -59,7 +59,7 @@ INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Jose", "Paltt", 4, NULL);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Ashley", "Rodriguez", 3, "Jose Paltt";
+VALUES ("Ashley", "Rodriguez", 3, "Jose Paltt");
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("Even", "Samuals", 1, "David Griffen");

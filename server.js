@@ -180,15 +180,15 @@ function employeeAdd() {
   function addEmployees(err,data) {
       if (err) throw err
 
-    connection.query("INSERT INTO employee SET ?",
-      {
+    cconnection.query("INSERT INTO employee SET ?", {
         first_name: data.first_name,
         last_name: data.last_name,
+        manager_id: data.manager,
         role_id: data.title,
-        manager_id: data.manager
-      }, function (error, res) {
-        if (error) throw error;
-      })
+      }, function (err, res) {
+        
+        if (err) throw err;
+      });
       next();
   }
 
