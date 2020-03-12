@@ -171,8 +171,7 @@ function employeeAdd() {
           name: "manager",
           choices: showemployees,
         }
-      ]).then( (err,res) => {
-          if (err) throw err;
+      ]).then( (res) => {
         
         addEmployees(res)
       })
@@ -183,8 +182,8 @@ function employeeAdd() {
       last_name: data.last_name,
       role_id: data.title,
       manager_id: data.manager
-    }, function (err, res) {
-      
+    },  (err, res) => {
+      console.log(data)
       if (err) throw err;
     });
     next();
