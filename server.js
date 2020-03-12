@@ -149,29 +149,29 @@ function employeeAdd() {
       .prompt([
         {
           type: 'input',
-          message: "What is the first name?",
-          name: "firstName",
+          message: "First name?",
+          name: "first_name",
         },
         {
           type: "input",
-          message: "What is the last name?",
-          name: "lastName",
+          message: "Last name?",
+          name: "last_name",
         },
         {
           type: "list",
-          message: "What is the employee's title?",
+          message: "Employee's title?",
           name: "title",
           choices: showroles
         },
         {
           type: "list",
-          message: "Who is the employee's manager?",
+          message: "Employee's manager?",
           name: "manager",
           choices: showemployees,
         }
-      ]).then(function (response) {
+      ]).then( (err,res) => {
         
-        addEmployees(response)
+        addEmployees(res)
       })
   }
 
