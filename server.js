@@ -1,5 +1,6 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
+const confirm = require('inquirer-confirm');
 
 
 const connection = mysql.createConnection({
@@ -97,10 +98,31 @@ function menu(option){
 }
 
 function rolesView(){
-   const query = "SELECT * FROM role";
+   let query = "SELECT * FROM role";
    connection.query(query,(err,res) => {
-    const roles = res.map(role =>({ name: role.title, id: role.id, salary: role.salary}))
     console.table(res)
+    next()
 
 } )
+};
+
+function employeeView(){
+    let query = "SELECT * FROM departments";
+    connection.query(query, (err,res) => {
+        console.table(res) 
+    })
 }
+
+function next() {
+    confirm("Continue?")
+    .then(function confirmed() {
+      startQuestions();
+    }, function cancelled() {
+      endapp();
+    });
+  }
+function endapp(){
+    console.log("See you next time!!");
+    connection.end()
+}
+
