@@ -207,9 +207,9 @@ function employeeAdd() {
   
   function addDepartment(data) {
     connection.query("INSERT INTO department SET ?", { name: data.name },
-    function (error, res) {
+     (err, res) => {
       
-      if (error) throw error;
+      if (err) throw err;
     });
     next();
   }
@@ -245,7 +245,7 @@ function employeeAdd() {
       title: data.title,
       salary: data.salary,
       department_id: data.id
-    }, function (err, res) {
+    },  (err, res) => {
       
       if (err) throw err;
     });
@@ -269,7 +269,7 @@ function employeeAdd() {
           choices: showroles
         }
       ])
-      .then(function (res) {
+      .then( (res) => {
        
         updateEmployeeRole(res);
       })
@@ -277,7 +277,7 @@ function employeeAdd() {
   
   function updateEmployeeRole(data) {
     connection.query(`UPDATE employee SET role_id = ${data.title_ID} WHERE id = ${data.emp_ID}`,
-    function (err, res) {
+     (err, res) => {
       
       if (err) throw err;
     });
